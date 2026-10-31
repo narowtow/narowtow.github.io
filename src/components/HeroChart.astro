@@ -61,7 +61,7 @@ const ordered = map.sites
       ))}
     </g>
   </svg>
-  <div class="chart-legend" aria-label="Map legend">
+  <div class="chart-legend" role="group" aria-label="Map legend">
     <div class="legend-scale">
       <span class="legend-title" data-legend-title>
         Skill vs better baseline
@@ -85,54 +85,58 @@ const ordered = map.sites
   <p class="chart-readout" data-readout aria-live="polite" aria-atomic="true">
     Explore a site for its climate, skill interval and forecast error.
   </p>
-  <figcaption data-caption>{caption}</figcaption>
-  <p class="chart-method">
-    How to read this: skill = 1 − MAE_model / MAE_baseline. The better rule is
-    selected per site on 2022–2023 validation years. Rings mark intervals that
-    include zero.
-  </p>
-  <details class="chart-summary">
-    <summary>Climate-group summary and data credits</summary>
-    <div class="chart-table-wrap">
-      <table>
-        <caption>
-          Per-site gradient boosting, 2024–2025 test years; medians of
-          site-level skills versus the validation-selected better baseline.
-        </caption>
-        <thead>
-          <tr>
-            <th scope="col">Köppen group</th>
-            <th scope="col">Sites</th>
-            <th scope="col">Median skill</th>
-            <th scope="col">95% CI above 0</th>
-          </tr>
-        </thead>
-        <tbody>
-          {map.groups.map((g) => (
-            <tr>
-              <th scope="row">
-                {g.group} {g.label}
-              </th>
-              <td>{g.n}</td>
-              <td>{(g.medianSkill * 100).toFixed(1)}%</td>
-              <td>{g.nCiAboveZero}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
-    <p>
-      Skillmap analysis of ERA5 (Copernicus/ECMWF) via Open-Meteo; places from
-      GeoNames; Köppen classes from Beck et al. (2023). Land: Natural Earth,
-      public domain. This sample describes climate-stratified sites, not a
-      global area-weighted average.
-    </p>
-  </details>
   <script
     type="application/json"
     data-chart-sites
     set:html={JSON.stringify(map.sites).replace(/</g, "\\u003c")}
   />
+  <figcaption>
+    <p class="chart-caption" data-caption>
+      {caption}
+    </p>
+    <p class="chart-method">
+      How to read this: skill = 1 − MAE_model / MAE_baseline. The better rule is
+      selected per site on 2022–2023 validation years. Rings mark intervals that
+      include zero.
+    </p>
+    <details class="chart-summary">
+      <summary>Climate-group summary and data credits</summary>
+      <div class="chart-table-wrap">
+        <table>
+          <caption>
+            Per-site gradient boosting, 2024–2025 test years; medians of
+            site-level skills versus the validation-selected better baseline.
+          </caption>
+          <thead>
+            <tr>
+              <th scope="col">Köppen group</th>
+              <th scope="col">Sites</th>
+              <th scope="col">Median skill</th>
+              <th scope="col">95% CI above 0</th>
+            </tr>
+          </thead>
+          <tbody>
+            {map.groups.map((g) => (
+              <tr>
+                <th scope="row">
+                  {g.group} {g.label}
+                </th>
+                <td>{g.n}</td>
+                <td>{(g.medianSkill * 100).toFixed(1)}%</td>
+                <td>{g.nCiAboveZero}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <p>
+        Skillmap analysis of ERA5 (Copernicus/ECMWF) via Open-Meteo; places from
+        GeoNames; Köppen classes from Beck et al. (2023). Land: Natural Earth,
+        public domain. This sample describes climate-stratified sites, not a
+        global area-weighted average.
+      </p>
+    </details>
+  </figcaption>
 </figure>
 <script>
   import "../scripts/hero-chart";
@@ -351,7 +355,8 @@ const ordered = map.sites
     overflow-wrap: anywhere;
     margin: 1rem 0;
   }
-  figcaption {
+  .chart-caption {
+    margin: 0;
     font-size: 0.9rem;
     line-height: 1.6;
   }
