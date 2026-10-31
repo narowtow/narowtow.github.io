@@ -1,0 +1,9 @@
+node_modules/
+dist/
+.astro/
+reference/
+test-results/
+playwright-report/
+.lighthouseci/
+blob-report/
+*.log

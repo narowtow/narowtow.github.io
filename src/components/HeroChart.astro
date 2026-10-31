@@ -1,0 +1,29 @@
+---
+// CONTRACT (Phase 0): pf-content replaces the body; the Props interface stays.
+// Renders a complete, meaningful SVG on the server (no JS needed), reserves its own
+// aspect ratio (no layout shift) and fills the width of its container.
+export interface Props {
+  /** Accessible heading id the figure is labelled by (rendered by the parent). */
+  labelledBy?: string;
+  class?: string;
+}
+const { labelledBy, class: className } = Astro.props;
+---
+
+<figure class:list={["hero-chart", className]} aria-labelledby={labelledBy}>
+  <svg viewBox="0 0 960 500" role="img" aria-label="Placeholder map of forecast sites">
+    <rect width="960" height="500" fill="currentColor" opacity="0.06"></rect>
+  </svg>
+  <figcaption>Placeholder: Skillmap forecast-skill map.</figcaption>
+</figure>
+
+<style>
+  .hero-chart {
+    margin: 0;
+  }
+  svg {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+</style>

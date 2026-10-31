@@ -1,0 +1,21 @@
+---
+// Placeholder; pf-site owns this page.
+import HeroChart from "../components/HeroChart.astro";
+import { getProjects } from "../lib/projects";
+const projects = await getProjects();
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Justin Ho</title>
+  </head>
+  <body>
+    <main>
+      <h1 id="hero-title">Justin Ho</h1>
+      <HeroChart labelledBy="hero-title" />
+      <ul>{projects.map((p) => <li>{p.data.title}</li>)}</ul>
+    </main>
+  </body>
+</html>
