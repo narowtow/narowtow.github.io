@@ -1,0 +1,15 @@
+{
+  "source": "data/source/visceral-age-rankings.json",
+  "location": "JPN",
+  "organ": "heart",
+  "measure": "deaths",
+  "year": 2023,
+  "sex": "both sexes",
+  "unit": "deaths per 100,000",
+  "crudeRate": 189.9,
+  "ageStandardizedRate": 81.99,
+  "crudeRank": 43,
+  "ageStandardizedRank": 180,
+  "nCountries": 185,
+  "rankOrder": "highest burden first"
+}
