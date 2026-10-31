@@ -6,6 +6,7 @@ interface Props {
 }
 const { project, caseStudy = false } = Astro.props;
 const { links } = project.data;
+const demoNoteId = `demo-note-${project.id}`;
 ---
 
 <div class="project-links">
@@ -14,12 +15,12 @@ const { links } = project.data;
       Read case study <span aria-hidden="true">→</span>
     </a>
   )}
-  <span>
-    <a href={links.demo}>
-      Live demo <span aria-hidden="true">↗</span>
-    </a>
-    {links.demoNote && <small>{links.demoNote}</small>}
-  </span>
+  <a
+    href={links.demo}
+    aria-describedby={links.demoNote ? demoNoteId : undefined}
+  >
+    Live demo <span aria-hidden="true">↗</span>
+  </a>
   <a href={links.repo}>
     Code <span aria-hidden="true">↗</span>
   </a>
@@ -29,3 +30,8 @@ const { links } = project.data;
     </a>
   )}
 </div>
+{links.demoNote && (
+  <p class="demo-note" id={demoNoteId}>
+    Live demo: {links.demoNote}
+  </p>
+)}

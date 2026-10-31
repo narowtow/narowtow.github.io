@@ -1,6 +1,8 @@
 # Justin Ho’s portfolio
 
-A static portfolio for a De Anza College Computer Science student, presenting reproducible projects in public health and climate.
+A static portfolio for Justin Ho, a De Anza College Computer Science student.
+
+“I analyze real-world data and build interactive tools to explore it.”
 
 Built with Astro, TypeScript, Markdown collections, plain CSS, and self-hosted Source Serif 4, Inter, and JetBrains Mono. Pages work without JavaScript; theme selection, email copy, and optional demos progressively enhance them.
 

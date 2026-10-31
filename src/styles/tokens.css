@@ -3,6 +3,7 @@
 :root {
   --color-bg: #faf8f4;
   --color-surface: #ffffff;
+  --color-figure-plate: #faf8f4;
   --color-ink: #1c1b19;
   --color-muted: #5c5a55;
   --color-rule: #dedad2;
@@ -36,8 +37,8 @@
     --color-data-pos: #68b9ad;
     --color-data-pos-strong: #a0dfcf;
     --color-data-neg: #db9676;
-    --color-data-zero: #777064;
-    --color-data-land: #35352f;
+    --color-data-zero: #a39c8d;
+    --color-data-land: #414039;
     --color-data-grid: #56544c;
     --color-button-ink: #172622;
     color-scheme: dark;
@@ -54,8 +55,8 @@
   --color-data-pos: #68b9ad;
   --color-data-pos-strong: #a0dfcf;
   --color-data-neg: #db9676;
-  --color-data-zero: #777064;
-  --color-data-land: #35352f;
+  --color-data-zero: #a39c8d;
+  --color-data-land: #414039;
   --color-data-grid: #56544c;
   --color-button-ink: #172622;
   color-scheme: dark;

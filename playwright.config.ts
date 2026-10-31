@@ -4,7 +4,7 @@
 // Run after `astro build`: `npx playwright test --project=unit` / `--project=e2e`.
 import { defineConfig, devices } from "@playwright/test";
 
-const PORT = 4321;
+const PORT = Number(process.env.PORTFOLIO_TEST_PORT ?? 4321);
 
 export default defineConfig({
   forbidOnly: !!process.env.CI,

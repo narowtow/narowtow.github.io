@@ -9,7 +9,7 @@ const projects = await getProjects();
 
 <BaseLayout
   title="Justin Ho — Data projects, carefully considered"
-  description="Computer Science student at De Anza College building reproducible data projects in public health and climate. Seeking data and software internships."
+  description="Computer Science student at De Anza College who analyzes real-world data and builds interactive tools to explore it. Seeking data and software internships."
   home
 >
   <section class="hero" aria-labelledby="hero-title">
@@ -17,7 +17,7 @@ const projects = await getProjects();
       <p class="kicker">Computer Science · De Anza College</p>
       <h1 id="hero-title">Justin Ho</h1>
       <p class="hero-positioning">
-        I build reproducible data projects in public health and climate.
+        I analyze real-world data and build interactive tools to explore it.
       </p>
       <p class="hero-bio">
         Computer Science student at De Anza College, preparing to transfer into
@@ -31,6 +31,9 @@ const projects = await getProjects();
           Résumé <span aria-hidden="true">→</span>
         </a>
       </div>
+      <a class="chart-source" href="/projects/skillmap/">
+        From Skillmap <span aria-hidden="true">→</span>
+      </a>
     </div>
     <div class="hero-evidence">
       <p class="kicker">A question from my work</p>
@@ -38,9 +41,6 @@ const projects = await getProjects();
         Where does machine learning beat simple forecasting rules?
       </h2>
       <HeroChart labelledBy="hero-chart-title" />
-      <a class="chart-source" href="/projects/skillmap/">
-        From Skillmap <span aria-hidden="true">→</span>
-      </a>
     </div>
   </section>
   <section

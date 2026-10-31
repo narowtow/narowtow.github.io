@@ -22,7 +22,7 @@ try {
     header{font:15px Mono;letter-spacing:2px;text-transform:uppercase;padding-bottom:24px;border-bottom:1px solid #dedad2;color:#5c5a55}
     h1{font:450 122px/1 Serif;letter-spacing:-6px;margin:44px 0 22px}p{font:400 37px/1.3 Serif;max-width:820px;margin:0}
     footer{position:absolute;bottom:48px;left:84px;right:72px;padding-top:20px;border-top:1px solid #dedad2;display:flex;justify-content:space-between;font:14px Mono;color:#0e6e6b}
-    </style><header>Computer Science · De Anza College</header><h1>Justin Ho</h1><p>I build reproducible data projects<br>in public health and climate.</p><footer><span>Selected work</span><span>narowtow.github.io ↗</span></footer></html>`);
+    </style><header>Computer Science · De Anza College</header><h1>Justin Ho</h1><p>I analyze real-world data and build interactive tools to explore it.</p><footer><span>Selected work</span><span>narowtow.github.io ↗</span></footer></html>`);
   await page.evaluate(() => document.fonts.ready);
   await mkdir("public/og", { recursive: true });
   await page.screenshot({ path: "public/og/default.png" });

@@ -137,7 +137,7 @@ test("without JavaScript the home is readable with contact and system theme", as
   ).toBeVisible();
   await expect(
     page.getByText(
-      "I build reproducible data projects in public health and climate.",
+      "I analyze real-world data and build interactive tools to explore it.",
     ),
   ).toBeVisible();
   await expect(page.locator(".project-card")).toHaveCount(2);

@@ -150,8 +150,6 @@ li + li {
 .kicker,
 .stack,
 .date,
-.image-note,
-figcaption,
 .chart-source {
   font-family: var(--font-mono);
   font-size: 0.72rem;
@@ -249,8 +247,8 @@ figcaption,
   display: grid;
   grid-template-columns: repeat(12, minmax(0, 1fr));
   gap: 2rem;
-  padding-block: clamp(3rem, 5.5vw, 5rem) 3.5rem;
-  align-items: center;
+  padding-block: 1rem;
+  align-items: start;
 }
 .hero-copy {
   grid-column: span 5;
@@ -299,7 +297,7 @@ figcaption,
   text-decoration: none;
 }
 .hero-evidence {
-  grid-column: 7 / -1;
+  grid-column: 6 / -1;
   padding-left: 1.6rem;
   border-left: 1px solid var(--color-rule);
   min-width: 0;
@@ -308,18 +306,12 @@ figcaption,
   font-size: clamp(1.4rem, 2vw, 1.85rem);
   line-height: 1.25;
   letter-spacing: -0.02em;
-  margin-block: 0.65rem 1.4rem;
+  margin-block: 0.65rem 0.8rem;
   max-width: 36ch;
 }
 .hero-chart {
   width: 100%;
   min-width: 0;
-}
-.hero-chart svg {
-  aspect-ratio: 960 / 500;
-}
-.hero-chart figcaption {
-  margin-top: 0.8rem;
 }
 .chart-source {
   display: inline-flex;
@@ -396,8 +388,7 @@ figcaption,
   margin-top: 0.8rem;
   font-size: 0.82rem;
 }
-.project-links > a,
-.project-links > span > a {
+.project-links > a {
   display: inline-flex;
   align-items: center;
   min-height: 44px;
@@ -406,10 +397,9 @@ figcaption,
 .project-links .strong-link {
   font-weight: 600;
 }
-.project-links small {
-  display: block;
-  max-width: 26ch;
-  font-size: 0.7rem;
+.demo-note {
+  margin-top: 0.15rem;
+  font-size: 0.75rem;
   color: var(--color-muted);
   line-height: 1.5;
 }
@@ -420,14 +410,18 @@ figcaption,
 }
 .project-visual picture {
   display: block;
+  padding: 0.5rem;
   border: 1px solid var(--color-rule);
-  background: var(--color-surface);
+  border-radius: 5px;
+  background: var(--color-figure-plate);
 }
 .project-visual img {
   width: 100%;
 }
 .image-note {
   margin-top: 0.7rem;
+  font: 400 0.8rem/1.6 var(--font-sans);
+  color: var(--color-muted);
 }
 .editorial-section {
   display: grid;
@@ -546,8 +540,8 @@ figcaption,
 }
 .glance-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  gap: 3rem;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr) minmax(0, 0.9fr);
+  gap: 2rem;
   margin-top: 1.5rem;
   font-size: 0.88rem;
 }
@@ -581,6 +575,13 @@ figcaption,
 .case-cover {
   margin-block: 3rem;
 }
+.case-cover img,
+.prose p > img,
+.prose p > picture {
+  padding: 0.5rem;
+  border-radius: 5px;
+  background: var(--color-figure-plate);
+}
 .case-cover img {
   width: auto;
   max-width: 100%;
@@ -589,6 +590,8 @@ figcaption,
 }
 figcaption {
   margin-top: 0.8rem;
+  font: 400 0.9rem/1.6 var(--font-sans);
+  color: var(--color-muted);
 }
 .case-body {
   display: grid;
@@ -633,7 +636,7 @@ figcaption {
   margin-block: 3rem 1.2rem;
   font-size: 2rem;
 }
-.prose > h2:first-child {
+.prose > :first-child {
   margin-top: 0;
 }
 .prose h3 {
@@ -648,7 +651,8 @@ figcaption {
 .prose p:has(> picture) {
   margin-top: 2rem;
 }
-.prose p > img {
+.prose p > img,
+.prose p > picture {
   width: auto;
   max-width: 100%;
   border: 1px solid var(--color-rule);
@@ -825,6 +829,27 @@ figcaption {
       text-decoration-color 160ms ease;
   }
 }
+/* Bound the desktop evidence panel while retaining the map's projection. */
+@media (min-width: 1060px) {
+  .projects-section > .section-heading {
+    padding-block: 1.2rem;
+  }
+  .hero .hero-chart svg {
+    width: min(100%, 560px);
+    margin-inline: auto;
+  }
+  .hero .hero-chart .chart-toolbar {
+    min-height: 50px;
+  }
+  .hero .hero-chart .chart-legend {
+    margin-block: 0.5rem;
+  }
+  .hero .hero-chart .chart-readout {
+    min-height: 3.5rem;
+    margin-block: 0.5rem;
+    padding: 0.5rem 0.75rem;
+  }
+}
 @media (max-width: 1050px) {
   .site-header {
     gap: 1.1rem;
@@ -839,6 +864,7 @@ figcaption {
     grid-column: span 6;
   }
   .hero-evidence {
+    grid-column: 7 / -1;
     padding-left: 1rem;
   }
   .prose {
@@ -850,7 +876,7 @@ figcaption {
 }
 @media (max-width: 759px) {
   .wrapper {
-    width: calc(100% - 40px);
+    width: calc(100% - 32px);
   }
   .site-header {
     display: grid;
@@ -885,6 +911,10 @@ figcaption {
   }
   .hero h1 {
     font-size: clamp(3.8rem, 16vw, 5.6rem);
+  }
+  .hero-actions .button {
+    flex: 1;
+    gap: 1rem;
   }
   .hero-positioning {
     font-size: 1.7rem;

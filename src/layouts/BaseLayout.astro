@@ -6,11 +6,16 @@ import serifFont from "@fontsource-variable/source-serif-4/files/source-serif-4-
 import sansFont from "@fontsource-variable/inter/files/inter-latin-wght-normal.woff2?url";
 interface Props {
   title: string;
-  description: string;
+  description?: string;
   home?: boolean;
   class?: string;
 }
-const { title, description, home = false, class: className } = Astro.props;
+const {
+  title,
+  description = "Computer Science student at De Anza College who analyzes real-world data and builds interactive tools to explore it. Seeking data and software internships.",
+  home = false,
+  class: className,
+} = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site);
 const socialImage = new URL("/og/default.png", Astro.site);
 const person = {
@@ -57,7 +62,7 @@ const person = {
     <meta property="og:image:height" content="630" />
     <meta
       property="og:image:alt"
-      content="Justin Ho — reproducible data projects in public health and climate"
+      content="Justin Ho — I analyze real-world data and build interactive tools to explore it."
     />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
