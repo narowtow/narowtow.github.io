@@ -1,0 +1,21 @@
+/* CONTRACT (Phase 0): token NAMES are fixed; pf-site owns the VALUES and adds more tokens freely.
+   Components outside pf-site (e.g. HeroChart) may only reference these names. */
+:root {
+  --color-bg: #faf8f4;
+  --color-surface: #ffffff;
+  --color-ink: #1c1b19;
+  --color-muted: #5c5a55;
+  --color-rule: #dedad2;
+  --color-accent: #0e6e6b;
+  --color-focus: #0e6e6b;
+  /* data colours: diverging skill scale (neg < 0 < pos) and neutral land/background */
+  --color-data-pos: #0e7c74;
+  --color-data-pos-strong: #064e4a;
+  --color-data-neg: #b5562f;
+  --color-data-zero: #d9d4c7;
+  --color-data-land: #e9e5dc;
+  --color-data-grid: #d6d1c6;
+  --font-serif: "Source Serif 4 Variable", Georgia, serif;
+  --font-sans: "Inter Variable", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono Variable", ui-monospace, monospace;
+}
