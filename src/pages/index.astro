@@ -1,21 +1,115 @@
 ---
-// Placeholder; pf-site owns this page.
+import BaseLayout from "../layouts/BaseLayout.astro";
 import HeroChart from "../components/HeroChart.astro";
+import ProjectCard from "../components/ProjectCard.astro";
+import ContactLinks from "../components/ContactLinks.astro";
 import { getProjects } from "../lib/projects";
 const projects = await getProjects();
 ---
 
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Justin Ho</title>
-  </head>
-  <body>
-    <main>
+<BaseLayout
+  title="Justin Ho — Data projects, carefully considered"
+  description="Computer Science student at De Anza College building reproducible data projects in public health and climate. Seeking data and software internships."
+  home
+>
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="hero-copy">
+      <p class="kicker">Computer Science · De Anza College</p>
       <h1 id="hero-title">Justin Ho</h1>
-      <HeroChart labelledBy="hero-title" />
-      <ul>{projects.map((p) => <li>{p.data.title}</li>)}</ul>
-    </main>
-  </body>
-</html>
+      <p class="hero-positioning">
+        I build reproducible data projects in public health and climate.
+      </p>
+      <p class="hero-bio">
+        Computer Science student at De Anza College, preparing to transfer into
+        Data Science and looking for internships.
+      </p>
+      <div class="hero-actions">
+        <a class="button primary" href="/#projects">
+          View projects <span aria-hidden="true">↓</span>
+        </a>
+        <a class="button" href="/resume/">
+          Résumé <span aria-hidden="true">→</span>
+        </a>
+      </div>
+    </div>
+    <div class="hero-evidence">
+      <p class="kicker">A question from my work</p>
+      <h2 id="hero-chart-title">
+        Where does machine learning beat simple forecasting rules?
+      </h2>
+      <HeroChart labelledBy="hero-chart-title" />
+      <a class="chart-source" href="/projects/skillmap/">
+        From Skillmap <span aria-hidden="true">→</span>
+      </a>
+    </div>
+  </section>
+  <section
+    id="projects"
+    class="projects-section"
+    aria-labelledby="projects-title"
+  >
+    <div class="section-heading">
+      <h2 id="projects-title">Selected projects</h2>
+      <p class="kicker">Questions → methods → evidence</p>
+    </div>
+    {projects.map((project, index) => (
+      <ProjectCard project={project} index={index} />
+    ))}
+  </section>
+  <section
+    id="about"
+    class="about-section editorial-section"
+    aria-labelledby="about-title"
+  >
+    <div>
+      <p class="kicker">Behind the work</p>
+      <h2 id="about-title">
+        Careful questions.
+        <br />
+        Measured work.
+      </h2>
+    </div>
+    <div class="reading-column">
+      <p>
+        I’m a Computer Science student at De Anza College in Cupertino, working
+        toward an A.S.-T in Computer Science since September 2024 and preparing
+        to transfer into Data Science. My coursework spans Data Structures in
+        C++, Python, R, x86 Assembly, Differential Equations, Linear Algebra,
+        Discrete Mathematics, and Statistics. I have a 3.66 GPA and have made
+        the Dean’s List every term.
+      </p>
+      <p>
+        These projects are a way to put that coursework to use: frame a
+        question, make the analytical choices explicit, and leave a path that
+        someone else can follow. I use AI coding agents in my workflow. I frame
+        the questions, make the analytical decisions, and review and verify the
+        work they help produce.
+      </p>
+      <p>
+        Outside school, I work as a furniture production and repair assistant at
+        Mr. Chairman and Sons in San Jose. Restoring chairs end to end means
+        measuring and cutting straps to exact specifications; careful
+        preparation matters to the finished result. I also volunteer with Second
+        Harvest food distribution. Across that work and my projects, I value
+        being specific about what I’m doing and checking the result.
+      </p>
+    </div>
+  </section>
+  <section
+    id="contact"
+    class="contact-section editorial-section"
+    aria-labelledby="contact-title"
+  >
+    <div>
+      <p class="kicker">Get in touch</p>
+      <h2 id="contact-title">Let’s talk.</h2>
+    </div>
+    <div class="reading-column">
+      <p>
+        I’m looking for data science and software internships. The fastest way
+        to reach me is email.
+      </p>
+      <ContactLinks />
+    </div>
+  </section>
+</BaseLayout>

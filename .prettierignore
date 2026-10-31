@@ -1,0 +1,12 @@
+dist/
+node_modules/
+reference/
+data/source/
+src/data/
+package-lock.json
+src/content/**/*.md
+.astro/
+test-results/
+playwright-report/
+.lighthouseci/
+blob-report/

@@ -1,0 +1,51 @@
+---
+import { Picture } from "astro:assets";
+import type { CollectionEntry } from "astro:content";
+import ProjectLinks from "./ProjectLinks.astro";
+interface Props {
+  project: CollectionEntry<"projects">;
+  index: number;
+}
+const { project, index } = Astro.props;
+const { data } = project;
+const metric = data.metrics[0];
+const domain =
+  project.id === "visceral"
+    ? "Public health"
+    : project.id === "skillmap"
+      ? "Climate & forecasting"
+      : data.subtitle;
+---
+
+<article class="project-card" aria-labelledby={`project-${project.id}`}>
+  <div class="project-copy">
+    <p class="kicker">
+      {String(index + 1).padStart(2, "0")} — {domain}
+    </p>
+    <h3 id={`project-${project.id}`}>{data.title}</h3>
+    <p class="project-subtitle">{data.subtitle}</p>
+    <p class="project-question">{data.question}</p>
+    <div class="headline-metric">
+      <p class="metric-value">{metric.value}</p>
+      <p class="metric-label">{metric.label}</p>
+      <p class="metric-detail">{metric.detail}</p>
+    </div>
+    <p class="stack">{data.stack.join(" · ")}</p>
+    <ProjectLinks project={project} caseStudy />
+  </div>
+  <div class="project-visual">
+    <Picture
+      src={data.cover}
+      alt={data.coverAlt}
+      formats={["avif", "webp"]}
+      widths={[360, 600, 900, 1200].filter(
+        (width) => width <= data.cover.width,
+      )}
+      sizes="(min-width: 1000px) 48vw, (min-width: 760px) 50vw, calc(100vw - 40px)"
+      loading={index === 0 ? "eager" : "lazy"}
+    />
+    <p class="image-note">
+      <span aria-hidden="true">↳</span> {data.subtitle}
+    </p>
+  </div>
+</article>

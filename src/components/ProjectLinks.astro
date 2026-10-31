@@ -1,0 +1,31 @@
+---
+import type { CollectionEntry } from "astro:content";
+interface Props {
+  project: CollectionEntry<"projects">;
+  caseStudy?: boolean;
+}
+const { project, caseStudy = false } = Astro.props;
+const { links } = project.data;
+---
+
+<div class="project-links">
+  {caseStudy && (
+    <a class="strong-link" href={`/projects/${project.id}/`}>
+      Read case study <span aria-hidden="true">→</span>
+    </a>
+  )}
+  <span>
+    <a href={links.demo}>
+      Live demo <span aria-hidden="true">↗</span>
+    </a>
+    {links.demoNote && <small>{links.demoNote}</small>}
+  </span>
+  <a href={links.repo}>
+    Code <span aria-hidden="true">↗</span>
+  </a>
+  {!caseStudy && links.docs && (
+    <a href={links.docs}>
+      Methods doc <span aria-hidden="true">↗</span>
+    </a>
+  )}
+</div>

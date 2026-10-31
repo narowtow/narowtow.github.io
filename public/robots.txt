@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://narowtow.github.io/sitemap-index.xml

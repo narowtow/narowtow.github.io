@@ -10,7 +10,15 @@
     "build:data": "node scripts/build-data.mjs",
     "check": "astro check",
     "build": "astro build",
-    "preview": "astro preview --host 127.0.0.1"
+    "preview": "astro preview --host 127.0.0.1",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "validate:html": "html-validate \"dist/**/*.html\"",
+    "test:unit": "playwright test --config tests/unit/playwright.config.ts --project=unit",
+    "test:e2e": "playwright test --project=e2e",
+    "budget": "node scripts/check-budget.mjs",
+    "audit": "lhci autorun",
+    "verify": "bash scripts/check.sh"
   },
   "dependencies": {
     "@astrojs/sitemap": "3.7.4",

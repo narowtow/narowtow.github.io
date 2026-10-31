@@ -1,0 +1,60 @@
+---
+interface Props {
+  compact?: boolean;
+}
+const { compact = false } = Astro.props;
+---
+
+<div
+  class:list={["contact-links", { compact }]}
+  data-contact
+  data-email-parts='["justindkho","gmail","com"]'
+>
+  <a class="email-link" data-email-link>
+    justindkho [at] gmail [dot] com
+  </a>
+  {!compact && (
+    <button type="button" class="text-button" data-copy-email hidden>
+      Copy email
+    </button>
+  )}
+  <a href="https://github.com/narowtow">
+    GitHub <span aria-hidden="true">↗</span>
+  </a>
+  {!compact && (
+    <span class="copy-status" role="status" aria-live="polite"></span>
+  )}
+</div>
+
+<script>
+  document
+    .querySelectorAll<HTMLElement>("[data-contact]")
+    .forEach((contact) => {
+      const [user, host, tld] = JSON.parse(
+        contact.dataset.emailParts || "[]",
+      ) as string[];
+      const email = `${user}@${host}.${tld}`;
+      const link =
+        contact.querySelector<HTMLAnchorElement>("[data-email-link]");
+      if (link) {
+        link.href = `mailto:${email}`;
+        link.textContent = email;
+      }
+      const button =
+        contact.querySelector<HTMLButtonElement>("[data-copy-email]");
+      if (button && navigator.clipboard) {
+        button.hidden = false;
+        button.addEventListener("click", async () => {
+          const status = contact.querySelector<HTMLElement>("[role=status]");
+          try {
+            await navigator.clipboard.writeText(email);
+            if (status) status.textContent = "Email copied.";
+          } catch {
+            if (status)
+              status.textContent =
+                "Please select the email address to copy it.";
+          }
+        });
+      }
+    });
+</script>

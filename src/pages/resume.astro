@@ -1,0 +1,124 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import ContactLinks from "../components/ContactLinks.astro";
+import { getProjects } from "../lib/projects";
+const projects = await getProjects();
+---
+
+<BaseLayout
+  title="Résumé — Justin Ho"
+  description="Justin Ho’s education, projects, experience, and technical skills. Computer Science student at De Anza College seeking data and software internships."
+  class="resume-page"
+>
+  <header class="resume-header">
+    <div>
+      <p class="kicker">Experience &amp; education</p>
+      <h1>Résumé</h1>
+      <p class="resume-name">Justin Ho</p>
+      <ContactLinks compact />
+    </div>
+    <a class="button primary download-link" href="/resume.pdf" download>
+      Download PDF <span aria-hidden="true">↓</span>
+    </a>
+  </header>
+  <div class="resume-content">
+    <section aria-labelledby="education-title">
+      <h2 id="education-title">Education</h2>
+      <div class="resume-entry">
+        <div class="entry-heading">
+          <h3>
+            De Anza College <span>Cupertino, CA</span>
+          </h3>
+          <p class="date">Sep 2024 – Present</p>
+        </div>
+        <p>
+          Associate in Science for Transfer in Computer Science
+          <br />
+          Intended Data Science transfer
+        </p>
+        <p>GPA 3.66 · Dean’s List (all terms)</p>
+        <p>
+          <strong>Coursework:</strong> Data Structures (C++), Python, R,
+          Assembly Language, Differential Equations, Linear Algebra, Discrete
+          Mathematics, Statistics.
+        </p>
+      </div>
+    </section>
+    <section aria-labelledby="experience-title">
+      <h2 id="experience-title">Experience</h2>
+      <div class="resume-entry">
+        <div class="entry-heading">
+          <h3>
+            Mr. Chairman and Sons <span>San Jose, CA</span>
+          </h3>
+          <p class="date">Feb 2026 – Present</p>
+        </div>
+        <p class="entry-role">Furniture Production &amp; Repair Assistant</p>
+        <ul>
+          <li>
+            Restore chairs end to end: strip worn materials, drill installation
+            holes, and weave replacement straps to produce secure, consistent
+            results.
+          </li>
+          <li>
+            Measure, cut, and shape straps to exact specifications, where small
+            errors compromise fit and durability.
+          </li>
+          <li>
+            Work directly with the company owner on daily production and
+            customer deliveries, completing assigned work independently.
+          </li>
+        </ul>
+      </div>
+      <div class="resume-entry">
+        <div class="entry-heading">
+          <h3>
+            Second Harvest <span>San Jose, CA</span>
+          </h3>
+          <p class="date">Feb 2026 – Present</p>
+        </div>
+        <p class="entry-role">Volunteer</p>
+        <ul>
+          <li>
+            Distributed grocery items directly to community members in need at a
+            Second Harvest food distribution event.
+          </li>
+          <li>
+            Worked alongside a team of volunteers to ensure efficient,
+            respectful service for all recipients.
+          </li>
+        </ul>
+      </div>
+    </section>
+    <section aria-labelledby="resume-projects-title">
+      <h2 id="resume-projects-title">Projects</h2>
+      {projects.map((project) => (
+        <div class="resume-entry">
+          <div class="entry-heading">
+            <h3>
+              {project.data.title} <span>{project.data.subtitle}</span>
+            </h3>
+            <p class="date">Oct 2026</p>
+          </div>
+          <p class="stack">{project.data.stack.join(" · ")}</p>
+          <p>{project.data.summary}</p>
+          <div class="project-links">
+            <a href={`/projects/${project.id}/`}>Case study</a>
+            <a href={project.data.links.demo}>Live demo</a>
+          </div>
+        </div>
+      ))}
+    </section>
+    <section aria-labelledby="skills-title">
+      <h2 id="skills-title">Skills</h2>
+      <p>
+        <strong>Languages:</strong> Python, C++, R, SQL, TypeScript, x86
+        Assembly.
+      </p>
+      <p>
+        <strong>Tools:</strong> Git/GitHub, Jupyter Notebook, VS Code, NumPy,
+        pandas, scikit-learn, Matplotlib, DuckDB, RStudio, Streamlit, Plotly.
+      </p>
+    </section>
+  </div>
+</BaseLayout>

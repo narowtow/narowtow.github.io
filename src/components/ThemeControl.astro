@@ -1,0 +1,44 @@
+<fieldset class="theme-control" data-theme-control hidden>
+  <legend class="sr-only">Color theme</legend>
+  <label>
+    <input type="radio" name="theme" value="system" checked />
+    <span>System</span>
+  </label>
+  <label>
+    <input type="radio" name="theme" value="light" />
+    <span>Light</span>
+  </label>
+  <label>
+    <input type="radio" name="theme" value="dark" />
+    <span>Dark</span>
+  </label>
+</fieldset>
+
+<script>
+  const control = document.querySelector<HTMLFieldSetElement>(
+    "[data-theme-control]",
+  );
+  if (control) {
+    const current = document.documentElement.dataset.theme || "system";
+    control.querySelectorAll<HTMLInputElement>("input").forEach((input) => {
+      input.checked = input.value === current;
+      input.addEventListener("change", () => {
+        const theme = input.value;
+        if (theme === "system") {
+          delete document.documentElement.dataset.theme;
+          document.documentElement.style.removeProperty("color-scheme");
+        } else {
+          document.documentElement.dataset.theme = theme;
+          document.documentElement.style.colorScheme = theme;
+        }
+        try {
+          if (theme === "system") localStorage.removeItem("theme");
+          else localStorage.setItem("theme", theme);
+        } catch {
+          /* Storage is optional; the choice still works on this page. */
+        }
+      });
+    });
+    control.hidden = false;
+  }
+</script>

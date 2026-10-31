@@ -1,0 +1,132 @@
+---
+import "../styles/global.css";
+import ThemeControl from "../components/ThemeControl.astro";
+import ContactLinks from "../components/ContactLinks.astro";
+import serifFont from "@fontsource-variable/source-serif-4/files/source-serif-4-latin-wght-normal.woff2?url";
+import sansFont from "@fontsource-variable/inter/files/inter-latin-wght-normal.woff2?url";
+interface Props {
+  title: string;
+  description: string;
+  home?: boolean;
+  class?: string;
+}
+const { title, description, home = false, class: className } = Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const socialImage = new URL("/og/default.png", Astro.site);
+const person = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: "Justin Ho",
+  url: "https://narowtow.github.io/",
+  jobTitle: "Computer Science student",
+  affiliation: { "@type": "CollegeOrUniversity", name: "De Anza College" },
+  sameAs: ["https://github.com/narowtow"],
+};
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link
+      rel="preload"
+      href={serifFont}
+      as="font"
+      type="font/woff2"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="preload"
+      href={sansFont}
+      as="font"
+      type="font/woff2"
+      crossorigin="anonymous"
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Justin Ho" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={socialImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta
+      property="og:image:alt"
+      content="Justin Ho — reproducible data projects in public health and climate"
+    />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={socialImage} />
+    <meta
+      name="theme-color"
+      content="#faf8f4"
+      media="(prefers-color-scheme: light)"
+    />
+    <meta
+      name="theme-color"
+      content="#201f1c"
+      media="(prefers-color-scheme: dark)"
+    />
+    <script is:inline>
+      (() => {
+        let theme = "system";
+        try {
+          theme = localStorage.getItem("theme") || "system";
+        } catch {}
+        if (theme === "light" || theme === "dark") {
+          document.documentElement.dataset.theme = theme;
+          document.documentElement.style.colorScheme = theme;
+        }
+      })();
+    </script>
+    {home && (
+      <script type="application/ld+json" set:html={JSON.stringify(person)} />
+    )}
+  </head>
+  <body class={className}>
+    <a class="skip-link" href="#main">
+      Skip to content
+    </a>
+    <header class="site-header wrapper">
+      <a class="wordmark" href="/" aria-label="Justin Ho, home">
+        Justin Ho<span aria-hidden="true">.</span>
+      </a>
+      <nav aria-label="Main navigation">
+        <a href="/#projects">Projects</a>
+        <a href="/#about">About</a>
+        <a
+          href="/resume/"
+          aria-current={Astro.url.pathname === "/resume/" ? "page" : undefined}
+        >
+          Résumé
+        </a>
+        <a href="/#contact">Contact</a>
+      </nav>
+      <ThemeControl />
+    </header>
+    <main id="main" class="wrapper" tabindex="-1">
+      <slot />
+    </main>
+    <footer class="site-footer wrapper">
+      <div>
+        <p class="footer-name">Justin Ho</p>
+        <ContactLinks compact />
+      </div>
+      <div class="footer-colophon">
+        <p>© 2026 Justin Ho</p>
+        <p>
+          Built with Astro ·{" "}
+          <a href="https://github.com/narowtow/narowtow.github.io">
+            Source on GitHub
+          </a>
+        </p>
+      </div>
+    </footer>
+  </body>
+</html>

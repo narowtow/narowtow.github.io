@@ -1,0 +1,52 @@
+---
+interface Props {
+  url: string;
+  title: string;
+}
+const { url, title } = Astro.props;
+---
+
+<section class="demo-section" aria-labelledby="demo-title">
+  <p class="kicker">Explore the project</p>
+  <h2 id="demo-title">Try it for yourself</h2>
+  <p>
+    The interactive demo loads when you choose.{" "}
+    <a href={url} target="_blank" rel="noreferrer">
+      Open in a new tab <span aria-hidden="true">↗</span>
+    </a>
+  </p>
+  <div
+    class="demo-frame"
+    data-demo-url={url}
+    data-demo-title={`${title} interactive demo`}
+  >
+    <button type="button" class="button primary" data-load-demo hidden>
+      Load interactive demo
+    </button>
+    <noscript>
+      <p>Follow the link above to explore the interactive demo.</p>
+    </noscript>
+  </div>
+</section>
+
+<script>
+  document
+    .querySelectorAll<HTMLElement>("[data-demo-url]")
+    .forEach((container) => {
+      const button =
+        container.querySelector<HTMLButtonElement>("[data-load-demo]");
+      if (!button) return;
+      button.hidden = false;
+      button.addEventListener(
+        "click",
+        () => {
+          const frame = document.createElement("iframe");
+          frame.src = container.dataset.demoUrl || "";
+          frame.title = container.dataset.demoTitle || "Interactive demo";
+          container.replaceChildren(frame);
+          frame.focus();
+        },
+        { once: true },
+      );
+    });
+</script>

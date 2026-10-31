@@ -1,0 +1,128 @@
+---
+import { Picture } from "astro:assets";
+import type { CollectionEntry } from "astro:content";
+import type { MarkdownHeading } from "astro";
+import BaseLayout from "./BaseLayout.astro";
+import ProjectLinks from "../components/ProjectLinks.astro";
+import DemoEmbed from "../components/DemoEmbed.astro";
+interface Props {
+  project: CollectionEntry<"projects">;
+  headings: MarkdownHeading[];
+  previous?: CollectionEntry<"projects">;
+  next?: CollectionEntry<"projects">;
+}
+const { project, headings, previous, next } = Astro.props;
+const { data } = project;
+const sections = headings.filter((heading) => heading.depth === 2);
+const canEmbed =
+  new URL(data.links.demo).origin === "https://narowtow.github.io";
+---
+
+<BaseLayout
+  title={`${data.title} — ${data.subtitle} | Justin Ho`}
+  description={data.summary}
+  class="case-study"
+>
+  <header class="case-header">
+    <a class="back-link" href="/#projects">
+      <span aria-hidden="true">←</span> All projects
+    </a>
+    <p class="kicker">
+      Case study ·{" "}
+      {data.date.toLocaleDateString("en-US", {
+        month: "long",
+        year: "numeric",
+        timeZone: "UTC",
+      })}
+    </p>
+    <h1>{data.title}</h1>
+    <p class="case-subtitle">{data.subtitle}</p>
+    <p class="case-summary">{data.summary}</p>
+  </header>
+  <section class="at-a-glance" aria-labelledby="glance-title">
+    <h2 id="glance-title" class="kicker">
+      At a glance
+    </h2>
+    <div class="glance-grid">
+      <div class="glance-question">
+        <h3>Question</h3>
+        <p>{data.question}</p>
+      </div>
+      <div class="glance-results">
+        <h3>Headline results</h3>
+        {data.metrics.map((metric) => (
+          <div class="headline-metric">
+            <p class="metric-value">{metric.value}</p>
+            <p class="metric-label">{metric.label}</p>
+            <p class="metric-detail">{metric.detail}</p>
+          </div>
+        ))}
+      </div>
+      <div>
+        <h3>Role</h3>
+        <p>{data.role}</p>
+        <h3>Stack</h3>
+        <p class="stack">{data.stack.join(" · ")}</p>
+        <h3>Links</h3>
+        <ProjectLinks project={project} />
+      </div>
+    </div>
+  </section>
+  <figure class="case-cover">
+    <Picture
+      src={data.cover}
+      alt={data.coverAlt}
+      formats={["avif", "webp"]}
+      widths={[390, 780, 1200, 1600].filter(
+        (width) => width <= data.cover.width,
+      )}
+      sizes="(min-width: 1320px) 1240px, calc(100vw - 48px)"
+      loading="eager"
+    />
+    <figcaption>{data.subtitle}</figcaption>
+  </figure>
+  <div class="case-body">
+    {sections.length > 0 && (
+      <aside class="case-toc">
+        <nav aria-label="On this page">
+          <p class="kicker">On this page</p>
+          <ol>
+            {sections.map((heading) => (
+              <li>
+                <a href={`#${heading.slug}`}>{heading.text}</a>
+              </li>
+            ))}
+          </ol>
+        </nav>
+      </aside>
+    )}
+    <div class="prose">
+      <slot />
+      {canEmbed && <DemoEmbed url={data.links.demo} title={data.title} />}
+    </div>
+  </div>
+  <nav class="project-pagination" aria-label="More projects">
+    {previous ? (
+      <a href={`/projects/${previous.id}/`}>
+        <span class="kicker">← Previous project</span>
+        <span>{previous.data.title}</span>
+      </a>
+    ) : (
+      <a href="/#projects">
+        <span class="kicker">← Back to</span>
+        <span>Selected projects</span>
+      </a>
+    )}
+    {next ? (
+      <a href={`/projects/${next.id}/`}>
+        <span class="kicker">Next project →</span>
+        <span>{next.data.title}</span>
+      </a>
+    ) : (
+      <a href="/#contact">
+        <span class="kicker">Next conversation →</span>
+        <span>Get in touch</span>
+      </a>
+    )}
+  </nav>
+</BaseLayout>
