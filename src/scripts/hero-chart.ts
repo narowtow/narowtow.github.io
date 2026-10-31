@@ -27,6 +27,7 @@ document.querySelectorAll<HTMLElement>("[data-hero-chart]").forEach((chart) => {
   function show(index: number) {
     if (index === current) return;
     current = index;
+    readout.scrollTop = 0;
     marks.forEach((mark) => mark.removeAttribute("data-current"));
     if (index < 0) {
       readout.textContent = initial;

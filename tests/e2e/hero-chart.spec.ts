@@ -53,7 +53,9 @@ test("toggle, keyboard and pointer inspection work without console errors", asyn
   await page.keyboard.press("ArrowDown");
   await expect(chart.locator("[data-readout]")).toContainText("Model MAE");
   await page.keyboard.press("Escape");
-  await expect(chart.locator("[data-readout]")).toContainText("Explore a site");
+  await expect(chart.locator("[data-readout]")).toContainText(
+    "Hover, tap or use arrow keys",
+  );
   const mark = chart.locator('[data-site="0"]');
   const box = await mark.boundingBox();
   await page.mouse.move(box!.x + box!.width / 2, box!.y + box!.height / 2);
@@ -83,4 +85,47 @@ test("a touch tap keeps the selected site readable after the finger leaves", asy
   await expect(chart.locator('[data-current="true"]')).toHaveCount(1);
   expect(box!.width).toBeGreaterThanOrEqual(6.98);
   await context.close();
+});
+
+test("compact chart fits narrow screens and reserves its readout space", async ({
+  page,
+}) => {
+  for (const width of [320, 360, 390, 1440]) {
+    await page.setViewportSize({ width, height: 1000 });
+    await page.goto("/");
+    await page.evaluate(() => document.fonts.ready);
+    const chart = page.locator("[data-hero-chart]");
+    const caption = chart.locator("figcaption");
+    const plot = chart.locator("svg");
+    await plot.focus();
+    const documentTop = () =>
+      caption.evaluate(
+        (element) => element.getBoundingClientRect().top + window.scrollY,
+      );
+    const before = await documentTop();
+    await page.keyboard.press("ArrowRight");
+    expect(await documentTop()).toBeCloseTo(before, 1);
+    await expect(chart.locator("[data-readout]")).toContainText("Model MAE");
+    expect(
+      await chart.evaluate((element) => element.lastElementChild?.tagName),
+    ).toBe("FIGCAPTION");
+    for (const element of await chart.locator(".legend-ticks span").all()) {
+      const box = await element.boundingBox();
+      expect(box!.x).toBeGreaterThanOrEqual(0);
+      expect(box!.x + box!.width).toBeLessThanOrEqual(width);
+    }
+    if (width >= 360) {
+      const eyebrow = await chart.locator(".chart-eyebrow").boundingBox();
+      const toggle = await chart.locator(".chart-toggle").boundingBox();
+      expect(eyebrow!.y).toBeGreaterThanOrEqual(toggle!.y);
+      expect(eyebrow!.y + eyebrow!.height).toBeLessThanOrEqual(
+        toggle!.y + toggle!.height,
+      );
+    }
+    expect(
+      await page.evaluate(
+        () => document.documentElement.scrollWidth <= innerWidth,
+      ),
+    ).toBe(true);
+  }
 });

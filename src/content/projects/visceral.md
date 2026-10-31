@@ -15,10 +15,10 @@ metrics:
     detail: "Crude versus age-standardized heart-death rate rank among 185 countries, highest burden first; Japan, both sexes, 2023."
   - value: "185 countries"
     label: geographic coverage
-    detail: "Country coverage of WHO GHE observations, rather than a separately published WHO world estimate; deaths and DALYs, eight estimate years from 2000–2023."
+    detail: "Countries with WHO Global Health Estimates in the pipeline, rather than a separately published WHO world estimate; deaths and DALYs for eight estimate years between 2000 and 2023."
   - value: "218 → 31"
     label: cause codes to body groups
-    detail: "218 WHO cause codes interpreted through a project-derived hierarchy partition into 31 organ/systemic groups, rather than an official WHO organ grouping; 185 countries, eight estimate years from 2000–2023."
+    detail: "218 WHO cause codes grouped into 31 organ and systemic groups by a project-derived mapping (not an official WHO grouping); 185 countries, eight estimate years between 2000 and 2023."
 links:
   demo: https://narowtow.github.io/visceral/
   repo: https://github.com/narowtow/visceral
@@ -34,8 +34,8 @@ A country’s crude death rate mixes disease burden with the age structure of it
 
 I used anatomy as an entry point into the data. Selecting an organ should lead to its definition, rates and underlying causes, rather than imply that a coloured surface measures an individual’s health. The explorer links that visual view to filters, an HTML organ list and chart tables.
 
-![Visceral explorer showing a coloured body beside country, sex, year and measure controls and the heart’s selected details.](../../assets/projects/visceral/explorer.png)
-_The anatomical view leads into the definitions and comparisons behind a selected group._
+![Visceral with lungs and airways selected for Japan, both sexes, 2023; the panel shows the group definition, age-standardized death rate and trend over the observed years.](../../assets/projects/visceral/organ-panel.png)
+_Selecting lungs and airways connects the anatomy to a group definition and the filtered population’s rate and trend._
 
 ## Data
 
@@ -47,7 +47,7 @@ The cause-to-organ mapping is a project-derived interpretation, not an official 
 
 ## Method
 
-The pipeline parses WHO workbooks, validates tidy tables, applies the cause mapping, standardizes and aggregates rates, then exports contract JSON for the web app. Reconciliation checks compare count-derived crude rates with published rates and retain known, pinned source inconsistencies explicitly. Missing values remain distinct from zero.
+The pipeline parses WHO workbooks and validates tidy tables. It applies the cause mapping, standardizes and aggregates rates, then exports contract JSON for the web app. Reconciliation checks compare count-derived crude rates with published rates and retain known, pinned source inconsistencies explicitly. Missing values remain distinct from zero.
 
 Country death comparisons sum WHO’s published fine-age cause-specific standardized rates. DALYs and the World aggregate instead use direct standardization over seven broad age bins. I kept that difference explicit rather than presenting the approximation as interchangeable with the published country rates.
 
@@ -67,7 +67,7 @@ Method sensitivity also changed the interpretation. In the 2023, both-sex countr
 ![Comparison of broad-bin and fine-age death-rate methods and their signed differences across mapped organ groups.](../../assets/projects/visceral/age-methods.png)
 _Pooling ages changes standardized rates enough that the production country-death view uses WHO’s fine-age rates._
 
-Holding the broad-bin method fixed, sensitivity analysis spans five standard populations. WHO2026 puts heart ahead of lungs in global death-ASDR ordering for 2023; Segi reverses that ordering. The body profile depends on declared weights as well as the underlying estimates.
+Holding the broad-bin method fixed, sensitivity analysis spans five standard populations. Using the WHO2026 standard population puts heart ahead of lungs in the global ordering of age-standardized death rates for 2023. Using the Segi standard population reverses that ordering. The body profile depends on declared weights as well as the underlying estimates.
 
 ## Limitations
 
@@ -77,6 +77,6 @@ Assigning one underlying cause to one primary group simplifies systemic disease 
 
 ## What I did and what I'd do next
 
-I chose the questions, data sources and evaluation design, directed and reviewed implementation by AI coding agents, verified the results and wrote up the findings. The pipeline and web app are tested in CI.
+I chose the questions, data sources and evaluation design. I directed and reviewed implementation by AI coding agents, verified the results and wrote up the findings. The project has 180+ automated test cases running in CI via GitHub Actions: 137 web and 50 pipeline test cases, verified by the owner on 2026-10-31.
 
 Next, I would make the mapping rationale and method differences easier to inspect beside each comparison. I would prioritize that explanation before adding more visual complexity: readers need to know which choices can change the answer.

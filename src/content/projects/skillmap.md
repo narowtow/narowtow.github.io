@@ -24,8 +24,8 @@ links:
   demoNote: Streamlit app; it may take a moment to wake up.
   repo: https://github.com/narowtow/skillmap
   docs: https://github.com/narowtow/skillmap#readme
-cover: ../../assets/projects/skillmap/skill_map.png
-coverAlt: World map of gradient-boosting skill against the better simple forecasting baseline at the study’s climate-stratified sites.
+cover: ../../assets/projects/skillmap/cover-map.png
+coverAlt: Equal Earth map of 200 climate-stratified sites coloured by gradient-boosting skill against the better simple rule; open rings mark 95% intervals that include zero.
 accent: clay
 ---
 
@@ -35,8 +35,8 @@ A small forecast error and a useful machine-learning model are different achieve
 
 I designed the comparison around next-day high temperature. The important decision was the baseline: forecasting tomorrow from today is often surprisingly competitive. A model should beat the stronger simple alternative before I describe its improvement as useful.
 
-![World map showing per-site gradient-boosting skill relative to the validation-selected better baseline, with uncertain sites distinguished.](../../assets/projects/skillmap/skill_map.png)
-_Relative improvement is widespread in this sample, but the baseline keeps its size in perspective._
+![First 90 test days at Cape Town and Darnah, comparing gradient-boosting and persistence predictions with ERA5 daily maximum temperature.](../../assets/projects/skillmap/example_city.png)
+_The highest- and lowest-skill sites show why I inspect individual forecasts: model improvement varies, and persistence remains a demanding comparison._
 
 ## Data
 
@@ -48,7 +48,7 @@ I credit [Open-Meteo](https://open-meteo.com/) and the underlying Copernicus/ECM
 
 ## Method
 
-The split follows time: training uses 2015–2021, validation uses 2022–2023 and the held-out test uses 2024–2025. Hyperparameters and each site’s better baseline are selected on validation. Models are then refit on training plus validation and the test is touched once. Predictors for a target day use only earlier days and the target’s calendar information.
+The split follows time. Training uses 2015–2021, validation uses 2022–2023 and the held-out test uses 2024–2025. Hyperparameters and each site’s better baseline are selected on validation. Models are then refit on training plus validation and the test is touched once. Predictors for a target day use only earlier days and the target’s calendar information.
 
 Persistence predicts tomorrow’s high from today’s high. Day-of-year climatology predicts the seasonal average and is fit on training years only during selection. I compared those rules with per-site ridge regression, per-site gradient boosting and a pooled gradient-boosting model. Preprocessing follows the training window rather than learning from future rows.
 
@@ -68,7 +68,7 @@ _Forecast difficulty varies substantially even where the model improves on its b
 
 The strongest exploratory driver is training-year lag-1 autocorrelation of temperature anomalies, with Spearman ρ = −0.63 against test skill across sites. Where anomalies persist, persistence is already strong and ML helps least. That association is not a causal explanation, and the driver comparisons have no multiple-testing adjustment.
 
-The downloader also needed to respect the source service. Its thread pool shares a weighted rate limiter, pauses globally on HTTP 429 and keeps a resumable ledger with cached chunks. A single benchmark of 48 fresh requests measured a 7.1× speedup at 8 threads versus 1 thread. That is a latency benchmark, not a claim that the complete rate-limited download became that much faster.
+The downloader also needed to respect the source service. Its thread pool shares a weighted rate limiter and pauses globally on HTTP 429. A resumable ledger tracks cached chunks. A single benchmark of 48 fresh requests measured a 7.1× speedup at 8 threads versus 1 thread. That is a latency benchmark, not a claim that the complete rate-limited download became that much faster.
 
 ![Download benchmark plotting elapsed time and speedup for one, two, four and eight threads on the same request workload.](../../assets/projects/skillmap/concurrency_speedup.png)
 _Concurrency reduced latency in a single benchmark; the service’s daily limit still constrained the full download._
@@ -81,6 +81,6 @@ The test covers only the stated held-out years. Bootstrap intervals are conditio
 
 ## What I did and what I'd do next
 
-I chose the question, sources and evaluation design, directed and reviewed implementation by AI coding agents, verified results and wrote the findings. The baseline and timing rules were central decisions, not details left to implementation.
+I chose the question, sources and evaluation design. I directed and reviewed implementation by AI coding agents, verified results and wrote the findings. The baseline and timing rules were central decisions, not details left to implementation.
 
 Next, I would test whether the relationships hold in another untouched period and investigate weak sites using richer weather inputs. Any operational version would need a separate evaluation using data actually available at forecast time.
