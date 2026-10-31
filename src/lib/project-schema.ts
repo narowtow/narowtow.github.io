@@ -40,4 +40,6 @@ export function projectSchema<T extends z.ZodTypeAny>(image: () => T) {
   });
 }
 
-export type ProjectData = z.infer<ReturnType<typeof projectSchema<z.ZodString>>>;
+export type ProjectData = z.infer<
+  ReturnType<typeof projectSchema<z.ZodString>>
+>;
