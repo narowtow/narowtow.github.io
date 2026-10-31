@@ -23,7 +23,9 @@ export default defineConfig({
   webServer: {
     command: `npx astro preview --host 127.0.0.1 --port ${PORT}`,
     url: `http://127.0.0.1:${PORT}/`,
-    reuseExistingServer: !process.env.CI,
+    // Never reuse: a stray preview from another worktree would test a stale build.
+    // If the port is busy, set PORTFOLIO_TEST_PORT.
+    reuseExistingServer: false,
     timeout: 60_000,
   },
 });
