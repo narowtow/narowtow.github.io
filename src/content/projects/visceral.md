@@ -77,6 +77,6 @@ Assigning one underlying cause to one primary group simplifies systemic disease 
 
 ## What I did and what I'd do next
 
-I chose the questions, data sources and evaluation design. I directed and reviewed implementation by AI coding agents, verified the results and wrote up the findings. The project has 180+ automated test cases running in CI via GitHub Actions: 137 web and 50 pipeline test cases, verified by the owner on 2026-10-31.
+I chose the questions, data sources and evaluation design. I directed and reviewed implementation by AI coding agents, verified the results and wrote up the findings. The project has 180+ automated test cases running in CI via GitHub Actions (137 web and 50 pipeline).
 
 Next, I would make the mapping rationale and method differences easier to inspect beside each comparison. I would prioritize that explanation before adding more visual complexity: readers need to know which choices can change the answer.

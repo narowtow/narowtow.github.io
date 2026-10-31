@@ -202,9 +202,11 @@ const ordered = map.sites
     outline: 3px solid var(--color-focus);
     outline-offset: 4px;
   }
-  .chart-plot {
+  /* Override the desktop page cap while preserving the viewBox ratio. */
+  .hero-chart svg.chart-plot {
     display: block;
     width: 100%;
+    margin-inline: 0;
     height: auto;
     aspect-ratio: 960 / 482;
     padding: 0;
@@ -412,6 +414,11 @@ const ordered = map.sites
     text-align: left;
     padding: 0.5rem;
     border-bottom: 1px solid var(--color-rule);
+  }
+  @media (min-width: 1060px) {
+    .hero-chart svg.chart-plot {
+      max-width: 580px;
+    }
   }
   @media (max-width: 600px) {
     .site {
