@@ -1,4 +1,6 @@
-process.env.CHROME_PATH = require("playwright").chromium.executablePath();
+// Respect an explicit CHROME_PATH (e.g. Google Chrome on Windows, where direct launches of
+// Playwright's Chromium can be blocked); otherwise use Playwright's Chromium.
+process.env.CHROME_PATH ??= require("playwright").chromium.executablePath();
 module.exports = {
   ci: {
     collect: {
